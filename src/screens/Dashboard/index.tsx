@@ -1,6 +1,13 @@
 import React from 'react';
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 import HighlightCard from '../../components/HighlightCard';
+
+import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard';
+
+export interface DatalistProps extends TransactionCardProps {
+    id: string;
+}
 
 import {
     Container,
@@ -12,10 +19,50 @@ import {
     UserName,
     UserWrapper,
     Icon,
-    HighlightCards
+    HighlightCards,
+    Transactions,
+    Title,
+    TransactionList
 } from './styles';
 
 export function Dashboard() {
+    const data: DatalistProps[] = [
+        {
+            id: '1',
+            type: 'positive',
+            title: "Desenvolvimento de site",
+            amount: "R$ 12.000,00",
+            category: {
+                name: 'Vendas',
+                icon: 'dollar-sign'
+            },
+            date: "13/04/2020"
+        },
+        {
+            id: '2',
+            type: 'negative',
+            title: "Hamburgueria Pizzy",
+            amount: "R$ 59,00",
+            category: {
+                name: 'Alimentação',
+                icon: 'coffee'
+            },
+            date: "10/04/2020"
+        },
+        {
+            id: '3',
+            type: 'negative',
+            title: "Aluguel do apartamento",
+            amount: "R$ 12.000,00",
+            category: {
+                name: 'Compras',
+                icon: 'shopping-bag'
+            },
+            date: "10/04/2020"
+        }
+    ];
+
+
     return (
         <Container>
             <Header>
@@ -58,6 +105,20 @@ export function Dashboard() {
                     type="total"
                 />
             </HighlightCards>
+
+            <Transactions>
+                <Title>
+                    Listagem
+                </Title>
+
+                <TransactionList
+                    data={data}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => <TransactionCard data={item} />}
+
+                />
+
+            </Transactions>
         </Container>
     )
 }
