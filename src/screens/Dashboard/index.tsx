@@ -31,6 +31,8 @@ import {
     LoadContainer
 } from './styles';
 
+import { useAuth } from '../../hooks/auth';
+
 interface HighlightProps {
     amount: string;
     lastTransaction: string;
@@ -48,6 +50,8 @@ export function Dashboard() {
     const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData);
 
     const theme = useTheme();
+
+    const { signOut, user } = useAuth();
 
     function getLastTransactionDate(collection: DataListProps[], type: 'positive' | 'negative') {
         const lastTransaction = new Date(
@@ -160,18 +164,18 @@ export function Dashboard() {
                         <Header>
                             <UserWrapper>
                                 <UserInfo>
-                                    <Photo source={{ uri: 'https://avatars.githubusercontent.com/u/28605398?v=4' }} />
+                                    <Photo source={{ uri: user.photo }} />
                                     <User>
                                         <UserGreeting>
                                             Olá,
                                         </UserGreeting>
                                         <UserName>
-                                            Samuel
+                                            {user.name}
                                         </UserName>
                                     </User>
                                 </UserInfo>
 
-                                <LogoutButton onPress={() => { }}>
+                                <LogoutButton onPress={signOut}>
                                     <Icon name="power" />
 
                                 </LogoutButton>
